@@ -18,7 +18,7 @@
   	  	  message('coercing to ',class(e1)[[1]])
   	  	  e2 <- match.fun(paste0('as.',as))(e2)
   	  }
-  }  	  
+  }
   # zero timepoints, one duration
   if(inherits(e1,'duration') && !inherits(e2,'timeline')){
   	  as <- class(e1)[[1]]
@@ -34,9 +34,9 @@
   res <- match.fun(paste0('as.',as))(res)
   res
 }
-	
+
 `-.timeline` <- function(e1,e2){
-  if(missing(e2)) if(any(c('mDateTime','mDate') %in% class(e1)))warning('negative mDate and mDateTime may not be meaningful')
+  if(missing(e2)) if(any(c('datetime','date') %in% class(e1)))warning('negative date and datetime may not be meaningful')
   if(missing(e2))return(e1 * (-1))
   # x - timepoint
   #if(inherits(e2,'timepoint'))stop('subtracting a timepoint is undefined')
@@ -56,7 +56,7 @@
   	  e2 <- match.fun(paste0('as.',as))(e2)
   }
   # any - duration
-  if(!inherits(e1,'timeline')){ 
+  if(!inherits(e1,'timeline')){
   	  as <- class(e2)[[1]]
   	  e1 <- match.fun(paste0('as.',as))(e1)
   }

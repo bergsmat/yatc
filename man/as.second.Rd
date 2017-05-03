@@ -1,4 +1,3 @@
-
 \name{as.second}
 \alias{duration}
 \alias{as.second}
@@ -92,7 +91,7 @@ an S3 "num" object with class \code{c(n, 'duration','timeline','numeric')}, wher
 \author{Tim Bergsma}
 \seealso{
 	\itemize{
-		\item \code{\link{as.mDateTime}}
+		\item \code{\link{as.datetime}}
 		\item \code{\link{timeline}}
 		\item \code{\link{c.timeline}}
 	}

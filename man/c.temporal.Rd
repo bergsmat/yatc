@@ -12,7 +12,7 @@
 \alias{rep.timeline}
 \title{Support for timepoint Classes}
 \description{
-  These functions support classes timepoint, timeline, mTime, mDate, and mDateTime
+  These functions support classes timepoint, timeline, time, date, and datetime
   (and related functions).  They are mostly S3 methods for base R generics.
 }
 \usage{
@@ -49,7 +49,7 @@ as.chartime(x, ...)
   generic.  \code{as.character.timepoint} and \code{print.timepoint} just call \code{format}.
   \code{chartime} variants are used internally by other functions.  \code{seq.timeline}
   requires \code{from}. If an interval cannot be calculated from supplied arguments,
-  \code{by} is set to 1 hour for \code{mTime} or 1 day for \code{mDate} or \code{mDateTime}.
+  \code{by} is set to 1 hour for \code{time} or 1 day for \code{date} or \code{datetime}.
 }
 \value{
   \item{print}{an invisible object with same class as \code{x}}
@@ -71,9 +71,9 @@ as.chartime(x, ...)
 
 #as.data.frame
 data.frame(
-	dt=as.mDateTime(seq(from=0,by=86500,length.out=3)),
-	d=as.mDate(seq(from=0,by=86400,length.out=3)),
-	t=as.mTime(c(60,120,180))
+	dt=as.datetime(seq(from=0,by=86500,length.out=3)),
+	d=as.date(seq(from=0,by=86400,length.out=3)),
+	t=as.time(c(60,120,180))
 )
 #                  dt          d     t
 # 1  1970-01-01 00:00 1970-01-01 00:01
@@ -81,31 +81,31 @@ data.frame(
 # 3 1970-01-03 00:03+ 1970-01-03 00:03
 
 #combine
-c(as.mTime(0),as.mTime(60))
+c(as.time(0),as.time(60))
 # 00:00 00:01
-c(as.mDate(0),as.mDate(86400))
+c(as.date(0),as.date(86400))
 # 1970-01-01 1970-01-02
-c(as.mDateTime(0),as.mDateTime(86500))
+c(as.datetime(0),as.datetime(86500))
 # 1970-01-01T00:00  1970-01-02T00:01+
 
 #subset
-as.mTime(c('08:00','09:00'))[2]
+as.time(c('08:00','09:00'))[2]
 # 09:00
-as.mDate(c('2008-01-01','2008-01-04'))[2]
+as.date(c('2008-01-01','2008-01-04'))[2]
 # 2008-01-04
-as.mDateTime(c('2008-01-01T12:00','2008-01-04T12:30'))[2]
+as.datetime(c('2008-01-01T12:00','2008-01-04T12:30'))[2]
 # 2008-01-04 12:30
 
 #element selection
-as.mTime(c('08:00','09:00'))[[2]]
+as.time(c('08:00','09:00'))[[2]]
 # 09:00
-as.mDate(c('2008-01-01','2008-01-04'))[[2]]
+as.date(c('2008-01-01','2008-01-04'))[[2]]
 # 2008-01-04
-as.mDateTime(c('2008-01-01T12:00','2008-01-04T12:30'))[[2]]
+as.datetime(c('2008-01-01T12:00','2008-01-04T12:30'))[[2]]
 # 2008-01-04 12:30
 
 #assignment
-a <- as.mTime(seq(60,300, by=60))
+a <- as.time(seq(60,300, by=60))
 a#00:01 00:02 00:03 00:04 00:05
 a[5] <- 60
 a#00:01 00:02 00:03 00:04 00:01
@@ -113,24 +113,24 @@ a[3] <- NA
 a#00:01 00:02 <NA>  00:04 00:01
 
 #identity
-as.mTime(as.mTime(0))
+as.time(as.time(0))
 # 00:00
-as.mDate(as.mDate(0))
+as.date(as.date(0))
 # 1970-01-01
-as.mDateTime(as.mDateTime(0))
+as.datetime(as.datetime(0))
 # 1970-01-01T00:00
 
 #repetition
-rep(as.mTime(86340),2)
+rep(as.time(86340),2)
 # 23:59 23:59
 
 #sequence
-seq(from=as.mTime('00:00'),length.out=3)
-seq(from=as.mTime('00:00'),by=as.mTime('00:05'),length.out=3)
-seq(from=as.mTime('00:00'),by=as.mTime('00:05'),along.with=integer(3))
-seq(from=as.mTime('00:00'),to=as.mTime('06:00'))
-seq(from=as.mTime('00:00'),to=as.mTime('06:00'),by=as.mTime('02:00'))
-seq(from=as.mTime('00:00'),to=as.mTime('06:00'),length.out=4)
+seq(from=as.time('00:00'),length.out=3)
+seq(from=as.time('00:00'),by=as.time('00:05'),length.out=3)
+seq(from=as.time('00:00'),by=as.time('00:05'),along.with=integer(3))
+seq(from=as.time('00:00'),to=as.time('06:00'))
+seq(from=as.time('00:00'),to=as.time('06:00'),by=as.time('02:00'))
+seq(from=as.time('00:00'),to=as.time('06:00'),length.out=4)
 
 }
 \keyword{manip}

@@ -12,34 +12,34 @@ as.chartime.numeric <- function(x,format,mark=TRUE,...){
 	y[is.na(x)] <- NA
 	y
 }
-as.mTime <- function(x,...)UseMethod('as.mTime')
-as.mTime.numeric <- function(x,...){
+as.time <- function(x,...)UseMethod('as.time')
+as.time.numeric <- function(x,...){
 	x <- round(x)
 	x[is.finite(x)] <- x[is.finite(x)]%%(60*60*24)
-	structure(x, class = c('mTime','timepoint','timeline','numeric'))
+	structure(x, class = c('time','timepoint','timeline','numeric'))
 }
-as.mTime.character <- function(x,format='%H:%M',...)as.mTime(as.numeric.chartime(x,format))
+as.time.character <- function(x,format='%H:%M',...)as.time(as.numeric.chartime(x,format))
 
-as.mDate <- function(x,...)UseMethod('as.mDate')
-as.mDate.numeric <- function(x,...){
+as.date <- function(x,...)UseMethod('as.date')
+as.date.numeric <- function(x,...){
 	x <- as.numeric(x)
 	x <- round(x)
 	f <- is.finite(x)
 	x[f] <- x[f] - x[f]%%(60*60*24)
-	structure(x, class = c('mDate','timepoint','timeline','numeric'))
+	structure(x, class = c('date','timepoint','timeline','numeric'))
 }
-as.mDate.character <- function(x,format='%Y-%m-%d',...)as.mDate(as.numeric.chartime(x,format))
-as.mDate.sasdate <-function(x,...)as.mDate(as.Date(x, origin="1960-01-01",...))
-as.mDateTime <- function(x,...)UseMethod('as.mDateTime')
-as.mDateTime.numeric <- function(x,...){
+as.date.character <- function(x,format='%Y-%m-%d',...)as.date(as.numeric.chartime(x,format))
+as.date.sasdate <-function(x,...)as.date(as.Date(x, origin="1960-01-01",...))
+as.datetime <- function(x,...)UseMethod('as.datetime')
+as.datetime.numeric <- function(x,...){
 	x <- round(x)
-	structure(x, class = c('mDateTime','timepoint','timeline','numeric'))
+	structure(x, class = c('datetime','timepoint','timeline','numeric'))
 }
-as.mDateTime.character <- function(x,format='%Y-%m-%dT%H:%M',...)as.mDateTime(as.numeric.chartime(x,format))
-as.mDateTime.mDate <- function(x,y=0,...)as.mDateTime(as.numeric(x)+as.numeric(as.second(y)))
-format.mTime <- function(x,format='%H:%M',mark=TRUE,...)as.chartime(x,format,mark)
-format.mDate <- function(x,format='%Y-%m-%d',mark=TRUE,...)as.chartime(x,format,mark)
-format.mDateTime <- function(x,format='%Y-%m-%dT%H:%M',mark=TRUE,...)as.chartime(x,format,mark)
+as.datetime.character <- function(x,format='%Y-%m-%dT%H:%M',...)as.datetime(as.numeric.chartime(x,format))
+as.datetime.date <- function(x,y=0,...)as.datetime(as.numeric(x)+as.numeric(as.second(y)))
+format.time <- function(x,format='%H:%M',mark=TRUE,...)as.chartime(x,format,mark)
+format.date <- function(x,format='%Y-%m-%d',mark=TRUE,...)as.chartime(x,format,mark)
+format.datetime <- function(x,format='%Y-%m-%dT%H:%M',mark=TRUE,...)as.chartime(x,format,mark)
 as.character.timepoint <- function(x,...)format(x,...)
 print.timepoint <-function(x,...){
 	print(format(x,...),quote=FALSE)
@@ -47,7 +47,7 @@ print.timepoint <-function(x,...){
 }
 c.timeline <- function (..., recursive = FALSE){
 	args <- list(...)
-	oldclass <- class(args[[1]])	
+	oldclass <- class(args[[1]])
 	structure(c(unlist(lapply(args, unclass))), class = oldclass)
 }
 seq.timeline <- function (from, to, by, length.out, along.with, ...){
@@ -56,9 +56,9 @@ seq.timeline <- function (from, to, by, length.out, along.with, ...){
   specified <- !missing(by)
   implied <- !missing(to) & (!missing(length.out) | !missing(along.with))
   if (!specified & !implied){
-    if (inherits(from, "mTime")) by = 60 * 60
-    if (inherits(from, "mDate")) by = 60 * 60 * 24
-    if (inherits(from, "mDateTime")) by = 60 * 60 * 24
+    if (inherits(from, "time")) by = 60 * 60
+    if (inherits(from, "date")) by = 60 * 60 * 24
+    if (inherits(from, "datetime")) by = 60 * 60 * 24
   }
   if(!missing(to)){
     stopifnot(identical(class(from),class(to)))
@@ -78,9 +78,9 @@ seq.timeline <- function (from, to, by, length.out, along.with, ...){
   class(x) <- theClass
   x
 }
-as.mTime.mTime <- function(x,...)x
-as.mDate.mDate <- function(x,...)x
-as.mDateTime.mDateTime <- function(x,...)x
+as.time.time <- function(x,...)x
+as.date.date <- function(x,...)x
+as.datetime.datetime <- function(x,...)x
 rep.timeline <- function (x, ...) structure(rep(as.numeric(x),...),class=class(x))
 
 
@@ -90,9 +90,9 @@ rep.timeline <- function (x, ...) structure(rep(as.numeric(x),...),class=class(x
 `[<-.timepoint` <- function (x, ..., value){
     if (!(length(value)))return(x)
     if(all(is.na(value)))value <- as.numeric(value)
-    if(inherits(x,'mTime'))value <- as.mTime(value)
-    if(inherits(x,'mDate'))value <- as.mDate(value)
-    if(inherits(x,'mDateTime'))value <- as.mDateTime(value)
+    if(inherits(x,'time'))value <- as.time(value)
+    if(inherits(x,'date'))value <- as.date(value)
+    if(inherits(x,'datetime'))value <- as.datetime(value)
     cl <- oldClass(x)
     class(x) <- class(value) <- NULL
     x <- NextMethod(.Generic)
@@ -100,39 +100,39 @@ rep.timeline <- function (x, ...) structure(rep(as.numeric(x),...),class=class(x
     x
 }
 xtfrm.timepoint <- function(x,...)as.numeric(x)
-as.mDate.Date <- function(x,...)as.mDate(round(as.numeric(x))*86400)
-as.mDateTime.POSIXct <- function(x,...)as.mDateTime(round(as.numeric(x)))
-as.mDateTime.POSIXlt <- function(x,...)as.mDateTime(as.POSIXct(x))
-as.mTime.times <- function(x,...)as.mTime(as.numeric(x)*86400)
-as.mDate.dates <- function(x,...)as.mDate(as.numeric(x)*86400)
-as.mDateTime.chron <- function(x,...)as.mDateTime(as.numeric(x)*86400)
+as.date.Date <- function(x,...)as.date(round(as.numeric(x))*86400)
+as.datetime.POSIXct <- function(x,...)as.datetime(round(as.numeric(x)))
+as.datetime.POSIXlt <- function(x,...)as.datetime(as.POSIXct(x))
+as.time.times <- function(x,...)as.time(as.numeric(x)*86400)
+as.date.dates <- function(x,...)as.date(as.numeric(x)*86400)
+as.datetime.chron <- function(x,...)as.datetime(as.numeric(x)*86400)
 unique.timepoint <- function(x, incomparables=FALSE,...)unique.numeric_version(x,incomparables,...)
-Summary.timepoint <- function (..., na.rm=FALSE) 
+Summary.timepoint <- function (..., na.rm=FALSE)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
-    if (!ok) 
+    if (!ok)
         stop(.Generic, " not defined for timepoint objects")
     val <- NextMethod(.Generic)
     class(val) <- oldClass(list(...)[[1L]])
     val
 }
-toSAS.mDateTime <- function(x, format="", format.info=NULL){
-	diff <- as.mDate('1970-01-01') - as.mDate('1960-01-01')
+toSAS.datetime <- function(x, format="", format.info=NULL){
+	diff <- as.date('1970-01-01') - as.date('1960-01-01')
 	x <- as.second(x)
 	x <- x + diff
 	attr(x, "SASformat") <- format
-    
+
 	x
 }
-toSAS.mDate <- function(x, format="", format.info=NULL){
-	diff <- as.day(as.mDate('1970-01-01') - as.mDate('1960-01-01'))
+toSAS.date <- function(x, format="", format.info=NULL){
+	diff <- as.day(as.date('1970-01-01') - as.date('1960-01-01'))
 	x <- as.day(as.second(x))
 	x <- x + diff
 	attr(x, "SASformat") <- format
-    
+
 	x
 }
-toSAS.mTime <- function(x, format="", format.info=NULL){
+toSAS.time <- function(x, format="", format.info=NULL){
 	x <- as.numeric(x)
 	attr(x, "SASformat") <- format
 	x
