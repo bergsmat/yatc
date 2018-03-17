@@ -87,7 +87,6 @@ See examples here, and at \code{\link{timeline}}. You cannot add two timepoints,
 an S3 "num" object with class \code{c(n, 'duration','timeline','numeric')}, where `n' is
 "second", "minute", "hour", "day", "week", "month", or "year", as implied.
 }
-\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

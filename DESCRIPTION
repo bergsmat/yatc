@@ -1,7 +1,7 @@
 Package: datetime
 Type: Package
 Title: Nominal Dates, Times, and Durations
-Version: 0.1.2
+Version: 0.1.3
 Author: Tim Bergsma
 Maintainer: Tim Bergsma <bergsmat@gmail.com>
 Description: Provides methods for working with nominal dates, times, and 

@@ -116,7 +116,6 @@ as.datetime(x, ...)
   \item{as.date}{object with class \code{c('date','timepoint','numeric')}}
   \item{as.datetime}{object with class \code{c('datetime','timepoint','numeric')}}
 }
-\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

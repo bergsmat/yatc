@@ -21,7 +21,6 @@ since 1960-01-01.The \code{time} method returns the number of seconds
 since midnight.
 }
 \value{numeric}
-\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{	\itemize{
 			\item \code{\link{timepoint}}

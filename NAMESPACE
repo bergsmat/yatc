@@ -69,3 +69,8 @@ S3method(unique,timepoint)
 S3method('+',timeline)
 S3method('-',timeline)
 S3method(xtfrm,timepoint)
+S3method('[',timeline)
+S3method('[[',timeline)
+S3method('[<-',timepoint)
+
+
