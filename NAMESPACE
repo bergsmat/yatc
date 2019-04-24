@@ -72,5 +72,8 @@ S3method(xtfrm,timepoint)
 S3method('[',timeline)
 S3method('[[',timeline)
 S3method('[<-',timepoint)
+if(getRversion() >= "3.6.0") {S3method(SASxport::toSAS, date)}
+if(getRversion() >= "3.6.0") {S3method(SASxport::toSAS, time)}
+if(getRversion() >= "3.6.0") {S3method(SASxport::toSAS, datetime)}
 
 
